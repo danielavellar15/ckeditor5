@@ -1,3 +1,4 @@
+/* eslint-disable linebreak-style */
 /**
  * @license Copyright (c) 2003-2021, CKSource - Frederico Knabben. All rights reserved.
  * For licensing, see LICENSE.md or https://ckeditor.com/legal/ckeditor-oss-license
@@ -11,6 +12,10 @@ import UploadAdapter from '@ckeditor/ckeditor5-adapter-ckfinder/src/uploadadapte
 import Autoformat from '@ckeditor/ckeditor5-autoformat/src/autoformat';
 import Bold from '@ckeditor/ckeditor5-basic-styles/src/bold';
 import Italic from '@ckeditor/ckeditor5-basic-styles/src/italic';
+import Underline from '@ckeditor/ckeditor5-basic-styles/src/underline';
+import Strikethrough from '@ckeditor/ckeditor5-basic-styles/src/strikethrough';
+import Subscript from '@ckeditor/ckeditor5-basic-styles/src/subscript';
+import Superscript from '@ckeditor/ckeditor5-basic-styles/src/superscript';
 import BlockQuote from '@ckeditor/ckeditor5-block-quote/src/blockquote';
 import CKFinder from '@ckeditor/ckeditor5-ckfinder/src/ckfinder';
 import EasyImage from '@ckeditor/ckeditor5-easy-image/src/easyimage';
@@ -30,6 +35,12 @@ import Table from '@ckeditor/ckeditor5-table/src/table';
 import TableToolbar from '@ckeditor/ckeditor5-table/src/tabletoolbar';
 import TextTransformation from '@ckeditor/ckeditor5-typing/src/texttransformation';
 import CloudServices from '@ckeditor/ckeditor5-cloud-services/src/cloudservices';
+import FindAndReplace from '@ckeditor/ckeditor5-find-and-replace/src/findandreplace';
+import Font from '@ckeditor/ckeditor5-font/src/font';
+import SourceEditing from '@ckeditor/ckeditor5-source-editing/src/sourceediting';
+import SpecialCharacters from '@ckeditor/ckeditor5-special-characters/src/specialcharacters';
+import HorizontalLine from '@ckeditor/ckeditor5-horizontal-line/src/horizontalline';
+import ListStyle from '@ckeditor/ckeditor5-list/src/liststyle';
 
 export default class ClassicEditor extends ClassicEditorBase {}
 
@@ -40,6 +51,10 @@ ClassicEditor.builtinPlugins = [
 	Autoformat,
 	Bold,
 	Italic,
+	Underline,
+	Strikethrough,
+	Subscript,
+	Superscript,
 	BlockQuote,
 	CKFinder,
 	CloudServices,
@@ -58,7 +73,13 @@ ClassicEditor.builtinPlugins = [
 	PasteFromOffice,
 	Table,
 	TableToolbar,
-	TextTransformation
+	TextTransformation,
+	Font,
+	FindAndReplace,
+	SourceEditing,
+	SpecialCharacters,
+	HorizontalLine,
+	ListStyle
 ];
 
 // Editor configuration.
@@ -67,22 +88,70 @@ ClassicEditor.defaultConfig = {
 		items: [
 			'heading',
 			'|',
+			'fontSize',
+			'fontFamily',
+			'fontColor',
+			'fontBackgroundColor',
+			'|',
 			'bold',
 			'italic',
+			'underline',
+			'strikethrough',
+			'subscript',
+			'superscript',
+			'horizontalLine',
 			'link',
+			'|',
 			'bulletedList',
 			'numberedList',
+			'indentList',
+			'outdentList',
 			'|',
 			'outdent',
 			'indent',
 			'|',
 			'uploadImage',
+			'specialCharacters',
 			'blockQuote',
 			'insertTable',
 			'mediaEmbed',
 			'undo',
-			'redo'
+			'redo',
+			'|',
+			'findAndReplace',
+			'sourceEditing'
 		]
+	},
+	fontFamily: {
+		options: [
+			'default',
+			'Arial, Helvetica, sans-serif',
+			'Courier New, Courier, monospace',
+			'Georgia, serif',
+			'Lucida Sans Unicode, Lucida Grande, sans-serif',
+			'Tahoma, Geneva, sans-serif',
+			'Times New Roman, Times, serif',
+			'Trebuchet MS, Helvetica, sans-serif',
+			'Verdana, Geneva, sans-serif'
+		],
+		supportAllValues: true
+	},
+	fontSize: {
+		options: [
+			6,
+			8,
+			10,
+			12,
+			14,
+			16,
+			18,
+			20,
+			22,
+			24,
+			28,
+			32
+		],
+		supportAllValues: true
 	},
 	image: {
 		toolbar: [
@@ -95,11 +164,41 @@ ClassicEditor.defaultConfig = {
 		]
 	},
 	table: {
-		contentToolbar: [
-			'tableColumn',
-			'tableRow',
-			'mergeTableCells'
+		contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+	},
+	heading: {
+		options: [
+			{
+				model: 'paragrafoPadrao',
+				view: {
+					name: 'p',
+					styles: {
+						'font-size': '18px',
+						'font-weight': 'normal',
+						'text-align': 'justify',
+						'text-indent': '2em',
+						'font-family': 'arial,helvetica,sans-serif'
+					}
+				},
+				title: 'Parágrafo Padrão'
+			},
+			{
+				model: 'referenciaPadrao',
+				view: {
+					name: 'p',
+					styles: {
+						'font-size': '14px',
+						'font-weight': 'normal',
+						'text-align': 'right',
+						'font-family': 'arial,helvetica,sans-serif'
+					}
+				},
+				title: 'Referência Padrão'
+			}
 		]
+	},
+	listStyle: {
+		type: 'lower-roman'
 	},
 	// This value must be kept in sync with the language defined in webpack.config.js.
 	language: 'en'
